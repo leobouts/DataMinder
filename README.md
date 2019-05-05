@@ -2,7 +2,7 @@
 
 [![Go to the profile of Leonidas Boutsikaris](https://cdn-images-1.medium.com/fit/c/100/100/2*ucX4eft2_64A13VDzZQU_g.png)](https://medium.com/@leobouts)
 
-[Leonidas Boutsikaris](https://medium.com/@leobouts)BlockedUnblockFollowFollowing
+[Leonidas Boutsikaris](https://medium.com/@leobouts)
 
 Apr 24
 
@@ -49,19 +49,8 @@ The filenames must be initialised by hand.The measurement type for every dataset
 ![The process of normalising the csv files](https://cdn-images-1.medium.com/max/1600/1*a6uVTPFGMu0kdGtjdGRnTQ.png)
 The process of normalising the csv files
 
-Lets define some variables.
+NOTE: PLEASE REFER TO THE PYTHON CODE. CODE SNIPPETS WONT APPEAR ON THE GITHUB README PAGE.
 
-Lets run this step by step. First we get all the available files from the directory we provided.
-
-Now lets find out all the available dates and years from every CSV file.
-
-We can now create a list with all the available years.
-
-After this we can normalise every single dataset to contain every year and every country.
-
-Every empty value will be initialised to ‘nan’ using the numpy nan function.
-
-Now we are ready to create the final CSV file that will be loaded. Note that the file will have the format of the Figure1.
 
 ### Setting up and Filling the database
 
@@ -109,7 +98,7 @@ Below we can see with a diagram how the whole system communicates.
 ![Connections between the App the server and the database](https://cdn-images-1.medium.com/max/1600/1*EDd41252FIx9hQQGihJKQQ.png)
 Connections between the App the server and the database
 
-Lets check the code.
+NOTE: PLEASE REFER TO THE NODE CODE. CODE SNIPPETS WONT APPEAR ON THE GITHUB README PAGE.
 
 > Security note: ever heard of an injection attack?
 
@@ -136,6 +125,8 @@ _Our Stepper will look like this:_
 ![](https://cdn-images-1.medium.com/max/1600/1*VXK9DfzTfs5nhbUqp-joyQ.png)
 
 we will first create a stepper tag. Our stepper is vertical and has a linear mode enabled. All our steps will be inside the vertical stepper tag.
+
+NOTE: PLEASE REFER TO THE ANGULAR CODE. CODE SNIPPETS WONT APPEAR ON THE GITHUB README PAGE.
 
 Lets take a look at our first step. The editable attribute says that we cant edit this step if it is completed. The completed attribute is a boolean variable controlled by the typescript file of this Angular component. When the user clicks the Begin button the getIndexes function will make the boolean variable step0 true.
 
@@ -165,6 +156,8 @@ The process above uses dynamic queries to produce procedurally the desired graph
 
 > Note: your nodeJs server must be running the port you provide in the dataService file
 
+NOTE: PLEASE REFER TO THE ANGULAR CODE. CODE SNIPPETS WONT APPEAR ON THE GITHUB README PAGE.
+
 Lets look at our data service. The base url refers to the port the NodeJS application is running. Every function passes parameters as a string to a certain endpoint we created using the fetch function.
 
 With a data service we can request the data that every step needs to continue.
@@ -180,6 +173,8 @@ The same logic applies to every call to the API.
 Ngx-charts is using Angular to render and animate the SVG elements with all of its binding and speed goodness, and uses d3 for the excellent math functions, scales, axis and shape generators, etc. Examples of Ngx-charts can be browsed [here](https://github.com/swimlane/ngx-charts).
 
 ### Lets prepare the data for the ngx-charts
+
+NOTE: PLEASE REFER TO THE HTML CODE. CODE SNIPPETS WONT APPEAR ON THE GITHUB README PAGE.
 
 The timeline and bar graphs have have exactly the same data format.
 
