@@ -1,0 +1,145 @@
+<head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<div *ngIf="!this.createGraphFlag">
+  <mat-progress-bar mode="determinate" value="{{progressBarValue}}"></mat-progress-bar>
+  <mat-progress-bar mode="buffer" *ngIf="progress"></mat-progress-bar>
+  <mat-vertical-stepper  [linear]="isLinear"  #stepper>
+    <mat-step [editable]="false" [completed]="step0">
+      <ng-template matStepLabel>Data selection process for scatter graphs</ng-template>
+      <br>
+      <div>
+        <button mat-button mat-raised-button color="primary"  (click)="getIndexes(stepper)">Begin</button>
+      </div>
+    </mat-step>
+
+    <mat-step  [editable]="false" [completed]="step1">
+      <ng-template matStepLabel>Choose specific indexes </ng-template>
+      <br>
+      <mat-form-field style="width:30em">
+        <mat-select placeholder="Click here to select" [formControl]="selectedUserIndexes" multiple>
+          <mat-select-trigger>
+            {{selectedUserIndexes.value ? selectedUserIndexes.value[0] : ''}}
+            <span *ngIf="selectedUserIndexes.value?.length > 1" class="additional-selection">
+            (+{{selectedUserIndexes.value.length - 1}} {{selectedUserIndexes.value?.length === 2 ? 'other' : 'others'}})
+            </span>
+          </mat-select-trigger>
+          <mat-option *ngFor="let index of specificList" [value]="index">
+            {{index}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br> <br>
+      <div>
+        <button mat-button mat-raised-button color="primary" (click)="specificValueFromFormUpdated(stepper)">Next</button>
+      </div>
+    </mat-step>
+
+    <mat-step  [editable]="false" [completed]="step12">
+      <ng-template matStepLabel>Choose a generic index </ng-template>
+      <br>
+      <mat-form-field style="width:30em">
+        <mat-select placeholder="Click here to select" [formControl]="selectedGenericIndex">
+          <mat-option *ngFor="let gIndex of genericList" [value]="gIndex">
+            {{gIndex}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br> <br>
+      <div>
+        <button mat-button mat-raised-button color="primary" style="margin:5px;" (click)="reset(stepper,1)">Reset</button>
+        <button mat-button mat-raised-button color="primary" (click)="genericValueFromFormUpdated(stepper)">Next</button>
+      </div>
+    </mat-step>
+
+    <mat-step [editable]="false" [completed]="step2">
+      <ng-template matStepLabel>Choose one or more of the available countries</ng-template>
+      <br> <br>
+      <mat-select placeholder="Click here to select" [formControl]="selectedValuesOfCountries" multiple>
+        <mat-select-trigger>
+          {{selectedValuesOfCountries.value ? selectedValuesOfCountries.value[0] : ''}}
+          <span *ngIf="selectedValuesOfCountries.value?.length > 1" class="additional-selection">
+            (+{{selectedValuesOfCountries.value.length - 1}} {{selectedValuesOfCountries.value?.length === 2 ? 'other' : 'others'}})
+            </span>
+        </mat-select-trigger>
+        <mat-option *ngFor="let country of countries" [value]="country">
+          {{country}}
+        </mat-option>
+      </mat-select>
+      <br> <br>
+      <div>
+        <button mat-button mat-raised-button color="primary" style="margin:5px;" (click)="reset(stepper,1)">Reset</button>
+        <button mat-button mat-raised-button color="primary" style="margin:5px;"  (click)="countriesSelected(stepper)">Next</button>
+      </div>
+    </mat-step>
+
+    <mat-step [editable]="false" [completed]="step3">
+      <form>
+        <ng-template matStepLabel>Interval</ng-template>
+        <mat-label>{{availableDatesString}}</mat-label>
+        <br><br>
+        <mat-form-field appearance="outline">
+          <mat-label>Start date</mat-label>
+          <input matInput placeholder="From"  [formControl]="selectedMinRange">
+          <mat-hint>Choose the starting date e.g. 1996</mat-hint>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="outline">
+          <mat-label>End date</mat-label>
+          <input matInput placeholder="To" [formControl]="selectedMaxRange">
+          <mat-hint>Choose the ending date e.g. 2007</mat-hint>
+        </mat-form-field>
+        <br> <br>
+        <div>
+          <button mat-button mat-raised-button color="primary" style="margin:5px;" (click)="reset(stepper,1)">Reset</button>
+          <button mat-button mat-raised-button color="primary" style="margin:5px;"  (click)="rangeSelected(stepper)">Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [editable]="false" [completed]="step4">
+      <ng-template matStepLabel>Choose the grouping option</ng-template>
+      <br> <br>
+      <mat-select placeholder="Click here to select" [formControl]="selectedValuesOfDates">
+        <mat-option *ngFor="let year of groupByYears" [value]="year">
+          {{year}}
+        </mat-option>
+      </mat-select>
+      <br> <br>
+      <div>
+        <button mat-button mat-raised-button color="primary" style="margin:5px;" (click)="reset(stepper,1)">Reset</button>
+        <button mat-button mat-raised-button color="primary" style="margin:5px;"  (click)="datesSelected(stepper)">Next</button>
+      </div>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <div>
+        <button mat-button mat-raised-button color="primary" style="margin:5px;" (click)="reset(stepper,1)">Reset</button>
+        <button mat-button mat-raised-button color="primary" style="margin:5px;" (click)="fetchFinalData()">Create the Graph</button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</div>
+
+<!--<div *ngIf="this.createGraphFlag">-->
+<!--<bar-graph></bar-graph>-->
+<!--&lt;!&ndash;ok the stepper value here on reset(stepper,0) does not exist because is outside of the mat stepper but uhh ok i used a flag-->
+<!--sto the compiler wont complain but ok the correct way to do this is with optional parameters that i dont want to search right now&ndash;&gt;-->
+<!--<button mat-button mat-raised-button color="primary" style="margin:5px;" (click)="reset(stepper,0)">Create a new graph!</button>-->
+<!--</div>-->
+
+<div *ngIf="this.createGraphFlag">
+  <ngx-charts-bubble-chart
+    [view]="view"
+    [scheme]="colorScheme"
+    [results]="this.finalData"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [legend]="showLegend"
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxisLabel]="xAxisLabel"
+    [yAxisLabel]="yAxisLabel">
+  </ngx-charts-bubble-chart>
+</div>
